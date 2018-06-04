@@ -35,7 +35,7 @@ namespace list_quickstart
             httpSrv = new RedHttpServer(6969, null);
             
             // Using url queries to generate an answer
-            httpSrv.Get("/json", async (req, res) =>
+            httpSrv.Get("/showControl/cues", async (req, res) =>
             {
                 List<Cue> cues = new List<Cue>();
 
@@ -53,6 +53,55 @@ namespace list_quickstart
 
                 cues.Add( cue);
 
+                cue = new Cue();
+                cue.id = 2;
+                cue.name="CUE 002";
+                cue.duration = 187;
+
+                cues.Add( cue);
+
+                cue = new Cue();
+                cue.id = 3;
+                cue.name="CUE 003";
+                cue.duration = 187;
+
+                cues.Add( cue);
+
+                cue = new Cue();
+                cue.id = 4;
+                cue.name="CUE 004";
+                cue.duration = 187;
+
+                cues.Add( cue);
+
+                cue = new Cue();
+                cue.id = 5;
+                cue.name="CUE 005";
+                cue.duration = 187;
+
+                cues.Add( cue);
+                
+                cue = new Cue();
+                cue.id = 6;
+                cue.name="CUE 006";
+                cue.duration = 187;
+
+                cues.Add( cue);
+
+                cue = new Cue();
+                cue.id = 7;
+                cue.name="CUE 007";
+                cue.duration = 187;
+
+                cues.Add( cue);
+
+                cue = new Cue();
+                cue.id = 8;
+                cue.name="CUE 008";
+                cue.duration = 187;
+
+                cues.Add( cue);
+
                 //await res.SendString($"Hello , have a nice day");
                 await res.SendString(JsonConvert.SerializeObject(cues));
             });
@@ -62,6 +111,11 @@ namespace list_quickstart
                 RplErraticMasterStatus reply = new RplErraticMasterStatus(true, false, false );
 
                 await ResolveEventArgs.SendString( JsonConvert.SerializeObject(reply));
+            });
+
+            httpSrv.Get("/test", async(Request, ResolveEventArgs) =>
+            {
+                await ResolveEventArgs.SendString("ErraticMaster:OK");
             });
 
             // start HTTP server
