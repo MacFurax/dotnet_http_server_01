@@ -17,7 +17,7 @@ namespace list_quickstart
        public bool erraticMasterStatus = false;
        public bool showControlStatus = false;
        public bool rideSystemStatus = false;
-       public List<String> latestMessages;
+       //public List<String> latestMessages;
 
        public RplErraticMasterStatus( bool erraticMasterStatus, bool showControlStatus, bool rideSystemStatus)
        {
@@ -102,7 +102,9 @@ namespace list_quickstart
 
                 cues.Add( cue);
 
-                //await res.SendString($"Hello , have a nice day");
+                // needed to allow request from other domain to be served
+                res.AddHeader("Access-Control-Allow-Origin", "*");
+
                 await res.SendString(JsonConvert.SerializeObject(cues));
             });
 
@@ -110,11 +112,17 @@ namespace list_quickstart
             {
                 RplErraticMasterStatus reply = new RplErraticMasterStatus(true, false, false );
 
+                // needed to allow request from other domain to be served
+                ResolveEventArgs.AddHeader("Access-Control-Allow-Origin", "*");
+
                 await ResolveEventArgs.SendString( JsonConvert.SerializeObject(reply));
             });
 
             httpSrv.Get("/test", async(Request, ResolveEventArgs) =>
             {
+                // needed to allow request from other domain to be served
+                ResolveEventArgs.AddHeader("Access-Control-Allow-Origin", "*");
+
                 await ResolveEventArgs.SendString("ErraticMaster:OK");
             });
 
@@ -124,5 +132,6 @@ namespace list_quickstart
             // wait to close app
             Console.ReadKey();
         }
+
     }
 }
